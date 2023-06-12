@@ -41,7 +41,6 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $kelas = Kelas::create([
-            'uuid' => Uuid::generate()->string,
             'nama_kelas' => $request->nama_kelas,
             'kode_kelas' => $request->kode_kelas,
         ]);
@@ -82,7 +81,7 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kelas = Kelas::where('uuid', $id)->first();
+        $kelas = Kelas::where('id', $id)->first();
         $kelas->update([
             'nama_kelas' => $request->nama_kelas,
             'kode_kelas' => $request->kode_kelas,
@@ -102,7 +101,7 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        Kelas::where('uuid', $id)->delete();
+        Kelas::where('id', $id)->delete();
         return response()->json([
             'success' => true,
             'message' => 'Kelas deleted',

@@ -41,7 +41,6 @@ class JurusanController extends Controller
     public function store(Request $request)
     {
         $jurusan = Jurusan::create([
-            'uuid' => Uuid::generate()->string,
             'nama_jurusan' => $request->nama_jurusan,
             'kode_jurusan' => $request->kode_jurusan,
         ]);

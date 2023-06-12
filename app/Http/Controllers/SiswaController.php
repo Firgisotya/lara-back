@@ -41,7 +41,6 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $kelas = Siswa::create([
-            'uuid' => Uuid::generate()->string,
             'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
             'kelas_id' => $request->kelas_id,
@@ -71,7 +70,7 @@ class SiswaController extends Controller
     public function show($id)
     {
         // get data by uuid
-        $siswa = Siswa::where('uuid', $id)->first();
+        $siswa = Siswa::where('id', $id)->first();
         return response()->json([
             'success' => true,
             'message' => 'Detail Data Siswa',
@@ -100,7 +99,7 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         // update data berdasarkan uuid
-        $siswa = Siswa::where('uuid', $id)->first();
+        $siswa = Siswa::where('id', $id)->first();
         $siswa->update([
             'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
@@ -131,7 +130,7 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         // hapus data berdasarkan uuid
-        $siswa = Siswa::where('uuid', $id)->first();
+        $siswa = Siswa::where('id', $id)->first();
         $siswa->delete();
         return response()->json([
             'success' => true,
