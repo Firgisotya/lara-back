@@ -40,9 +40,14 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
+        $validateData = $request->validate([
+            'nama_kelas' => 'required|max:255',
+            'kode_kelas' => 'required|max:255',
+        ]);
+
         $kelas = Kelas::create([
-            'nama_kelas' => $request->nama_kelas,
-            'kode_kelas' => $request->kode_kelas,
+            'nama_kelas' => $validateData['nama_kelas'],
+            'kode_kelas' => $validateData['kode_kelas'],
         ]);
         return response()->json([
             'success' => true,
