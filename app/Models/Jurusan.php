@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Jurusan extends Model
 {
     use HasFactory;
+    public $incrementing = false;
     protected $table = "jurusans";
-    protected $guarded = ["id"];
+    protected $guarded = [];
 
     public function siswa()
     {

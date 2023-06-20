@@ -14,8 +14,7 @@ class CreateSiswasTable extends Migration
     public function up()
     {
         Schema::create('siswas', function (Blueprint $table) {
-            $table->id();
-            $table->uuid("uuid")->nullable();
+            $table->uuid("id")->primary();
             $table->integer("nis")->nullable();
             $table->integer("kelas_id")->nullable();
             $table->integer("jurusan_id")->nullable();

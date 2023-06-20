@@ -46,6 +46,7 @@ class KelasController extends Controller
         ]);
 
         $kelas = Kelas::create([
+            'id' => Uuid::uuid4()->toString(),
             'nama_kelas' => $validateData['nama_kelas'],
             'kode_kelas' => $validateData['kode_kelas'],
         ]);
@@ -88,6 +89,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::where('id', $id)->first();
         $kelas->update([
+            'id' => Uuid::uuid4()->toString(),
             'nama_kelas' => $request->nama_kelas,
             'kode_kelas' => $request->kode_kelas,
         ]);

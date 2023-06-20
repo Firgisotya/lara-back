@@ -14,8 +14,7 @@ class CreateJurusansTable extends Migration
     public function up()
     {
         Schema::create('jurusans', function (Blueprint $table) {
-            $table->id();
-            $table->uuid("uuid")->nullable();
+            $table->uuid("id")->primary();
             $table->string("nama_jurusan")->nullable();
             $table->string("kode_jurusan")->nullable();
             $table->timestamps();

@@ -25,8 +25,8 @@ Route::post('/refresh', [AuthController::class, 'refresh']);
 
 Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::resource('user', UserController::class);
-    Route::resource('kelas', KelasController::class);
-    Route::resource('jurusan', JurusanController::class);
-    Route::resource('siswa', SiswaController::class);
+    Route::apiResource('user', UserController::class);
+    Route::apiResource('kelas', KelasController::class);
+    Route::apiResource('jurusan', JurusanController::class);
+    Route::apiResource('siswa', SiswaController::class);
 });

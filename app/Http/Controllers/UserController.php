@@ -41,7 +41,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create([
-            'uuid' => Uuid::generate()->string,
+            'id' => Uuid::uuid4()->toString(),
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -90,7 +90,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('uuid', $id)->update([
+        $user = User::where('id', $id)->update([
+            'id' => Uuid::uuid4()->toString(),
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
@@ -111,7 +112,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('uuid', $id)->delete();
+        $user = User::where('id', $id)->delete();
         return response()->json([
             'success' => true,
             'message' => 'User deleted',

@@ -41,6 +41,7 @@ class JurusanController extends Controller
     public function store(Request $request)
     {
         $jurusan = Jurusan::create([
+            'id' => Uuid::uuid4()->toString(),
             'nama_jurusan' => $request->nama_jurusan,
             'kode_jurusan' => $request->kode_jurusan,
         ]);
@@ -84,6 +85,7 @@ class JurusanController extends Controller
     {
         $jurusan = Jurusan::find($id);
         $jurusan->update([
+            'id' => Uuid::uuid4()->toString(),
             'nama_jurusan' => $request->nama_jurusan,
             'kode_jurusan' => $request->kode_jurusan,
         ]);

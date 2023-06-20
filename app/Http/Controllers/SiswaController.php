@@ -41,6 +41,7 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $kelas = Siswa::create([
+            'id' => Uuid::uuid4()->toString(),
             'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
             'kelas_id' => $request->kelas_id,
@@ -101,6 +102,7 @@ class SiswaController extends Controller
         // update data berdasarkan uuid
         $siswa = Siswa::where('id', $id)->first();
         $siswa->update([
+            'id' => Uuid::uuid4()->toString(),
             'nis' => $request->nis,
             'nama_siswa' => $request->nama_siswa,
             'kelas_id' => $request->kelas_id,
