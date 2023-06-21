@@ -40,6 +40,12 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'nis' => 'required',
+            
+        ])
+
         $kelas = Siswa::create([
             'id' => Uuid::uuid4()->toString(),
             'nis' => $request->nis,
