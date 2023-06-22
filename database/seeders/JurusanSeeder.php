@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class JurusanSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class JurusanSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('jurusans')->insert([
+            [
+                "id" => "dgfdfgdfgjy",
+                "nama_jurusan" => "Rekayasa Perangkat Lunak",
+            ]
+        ]);
     }
 }

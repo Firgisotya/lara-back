@@ -14,6 +14,21 @@ class KelasSeeder extends Seeder
      */
     public function run()
     {
-        
+        DB::table('kelas')->insert([
+            [
+                "id" => "dfkghdfjkg",
+                "nama_kelas" => "X RPL 1",
+            ],
+            [
+                "id" => "erte",
+                "nama_kelas" => "X RPL 2",
+            ],
+            [
+                "id" => "yyuiy",
+                "nama_kelas" => "X RPL 3",
+            ]
+
+            
+        ]);
     }
 }

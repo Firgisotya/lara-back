@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 
 class SiswaController extends Controller
@@ -18,7 +19,7 @@ class SiswaController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Siswa list',
-            'data' => Siswa::all()
+            'data' => Siswa::with('kelas', 'jurusan')->get(),
         ], 200);
     }
 
@@ -43,28 +44,47 @@ class SiswaController extends Controller
 
         $validated = $request->validate([
             'nis' => 'required',
-            
-        ])
+            'nama_siswa' => 'required',
+            'kelas_id' => 'required',
+            'jurusan_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'email' => 'required',
+            'agama' => 'required',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-        $kelas = Siswa::create([
+        // Mengunggah file foto
+    if ($request->hasFile('foto')) {
+        $foto = $request->file('foto');
+        $nama_file = $foto->getClientOriginalName();
+
+        // Simpan file foto ke direktori storage/app/public/fotosiswa
+        $foto->storeAs('public/fotosiswa', $nama_file);
+    }
+
+        $siswa = Siswa::create([
             'id' => Uuid::uuid4()->toString(),
-            'nis' => $request->nis,
-            'nama_siswa' => $request->nama_siswa,
-            'kelas_id' => $request->kelas_id,
-            'jurusan_id' => $request->jurusan_id,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-            'email' => $request->email,
-            'agama' => $request->agama,
-            'foto' => $request->foto,
+            'nis' => $validated['nis'],
+            'nama_siswa' => $validated['nama_siswa'],
+            'kelas_id' => $validated['kelas_id'],
+            'jurusan_id' => $validated['jurusan_id'],
+            'jenis_kelamin' => $validated['jenis_kelamin'],
+            'tempat_lahir' => $validated['tempat_lahir'],
+            'tanggal_lahir' => $validated['tanggal_lahir'],
+            'alamat' => $validated['alamat'],
+            'no_hp' => $validated['no_hp'],
+            'email' => $validated['email'],
+            'agama' => $validated['agama'],
+            'foto' => $nama_file,
         ]);
         return response()->json([
             'success' => true,
-            'message' => 'Kelas created',
-            'data' => $kelas
+            'message' => 'Siswa created',
+            'data' => $siswa
         ], 201);
     }
 

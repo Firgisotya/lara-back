@@ -16,8 +16,8 @@ class CreateSiswasTable extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->integer("nis")->nullable();
-            $table->integer("kelas_id")->nullable();
-            $table->integer("jurusan_id")->nullable();
+            $table->uuid("kelas_id")->nullable();
+            $table->uuid("jurusan_id")->nullable();
             $table->string("nama_siswa")->nullable();
             $table->string("tempat_lahir")->nullable();
             $table->date("tanggal_lahir")->nullable();
