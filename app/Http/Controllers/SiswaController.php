@@ -126,22 +126,48 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         // update data berdasarkan uuid
-        $siswa = Siswa::where('id', $id)->first();
-        $siswa->update([
-            'id' => Uuid::uuid4()->toString(),
-            'nis' => $request->nis,
-            'nama_siswa' => $request->nama_siswa,
-            'kelas_id' => $request->kelas_id,
-            'jurusan_id' => $request->jurusan_id,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-            'email' => $request->email,
-            'agama' => $request->agama,
-            'foto' => $request->foto,
+        $validated = $request->validate([
+            'nis' => 'required',
+            'nama_siswa' => 'required',
+            'kelas_id' => 'required',
+            'jurusan_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'email' => 'required',
+            'agama' => 'required',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        //mengecek apakah ada file foto yang diupload
+        if ($request->hasFile('foto')) {
+            //delete old file
+            $siswa = Siswa::where('id', $id)->first();
+            Storage::disk('local')->delete('public/fotosiswa/'.$siswa->foto);
+
+            //upload new file
+            $foto = $request->file('foto');
+            $nama_file = $foto->getClientOriginalName();
+            $foto->storeAs('public/fotosiswa', $nama_file);
+        }
+
+        $siswa = Siswa::where('id', $id)->update([
+            'nis' => $validated['nis'],
+            'nama_siswa' => $validated['nama_siswa'],
+            'kelas_id' => $validated['kelas_id'],
+            'jurusan_id' => $validated['jurusan_id'],
+            'jenis_kelamin' => $validated['jenis_kelamin'],
+            'tempat_lahir' => $validated['tempat_lahir'],
+            'tanggal_lahir' => $validated['tanggal_lahir'],
+            'alamat' => $validated['alamat'],
+            'no_hp' => $validated['no_hp'],
+            'email' => $validated['email'],
+            'agama' => $validated['agama'],
+            'foto' => $nama_file,
+        ]);
+
         return response()->json([
             'success' => true,
             'message' => 'Post Updated',
@@ -159,6 +185,7 @@ class SiswaController extends Controller
     {
         // hapus data berdasarkan uuid
         $siswa = Siswa::where('id', $id)->first();
+        Storage::disk('local')->delete('public/fotosiswa/'.$siswa->foto);
         $siswa->delete();
         return response()->json([
             'success' => true,
